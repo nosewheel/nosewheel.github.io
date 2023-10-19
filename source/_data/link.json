@@ -3,6 +3,7 @@
         "github": "https://github.com/nosewheel"
     },
     "extern": {
-		"Github地址": "https://github.com/nosewheel"
+		    "Go": "https://go.dev/",
+        "PHP": "https://www.php.net/"
     }
 }
