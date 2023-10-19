@@ -1,0 +1,26 @@
+{
+    "avatar": "../images/touxiang.jpg",
+    "name": "分地瓜",
+	"tag": "后端/全栈",
+    "desc": "开发同学",
+    "skills": {
+        "PHP": 8,
+		"Python": 6,
+		"Go": 8,
+		"invisible-split-line-1": -1,
+
+		"Node.js": 4
+    },
+    "projects": [{
+		"name": "go-toolkit",
+		"image": "",
+		"tags": ["2016年", "项目标签"],
+		"description": "go-toolkit",
+		"link_text": "网站链接",
+		"link": "https://github.com/nosewheel/toolkit"
+	}],
+	"reward": [
+	    "../images/weixin_reward.jpg",
+		"../images/zhifubao_reward.jpg"
+	]
+}

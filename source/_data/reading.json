@@ -1,0 +1,38 @@
+{
+    "define": {
+	    "readed": "已读",
+        "reading": "在读",
+        "wanted": "想读"
+    },
+    "contents": {
+        "readed": [{
+            "title": "Go程序设计语言",
+            "cover": "https://img2.doubanio.com/view/subject/l/public/s29458403.jpg",
+            "review": "go语言学习必读",
+            "score": "9.5",
+            "doubanLink": "https://book.douban.com/subject/27044219/"
+        }, {
+            "title": "高性能MySQL（第4版）",
+            "cover": "https://img1.doubanio.com/view/subject/l/public/s34312038.jpg",
+            "review": "后端开发必读",
+            "score": "9.5",
+            "doubanLink": "https://book.douban.com/subject/36096578/"
+        }],
+		
+		"reading": [{
+            "title": "ChatGPT进阶 : 提示工程入门",
+            "cover": "https://img2.doubanio.com/view/subject/l/public/s34619521.jpg",
+            "review": "",
+            "score": null,
+            "doubanLink": "https://book.douban.com/subject/36515079/"
+        }],
+
+        "wanted": [{
+            "title": "机器学习",
+            "cover": "https://img1.doubanio.com/view/subject/l/public/s28735609.jpg",
+            "review": "",
+            "score": null,
+            "doubanLink": "https://book.douban.com/subject/26708119/"
+        }]
+    }
+}
