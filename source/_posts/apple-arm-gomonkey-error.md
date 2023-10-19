@@ -2,6 +2,12 @@
 title: Apple arm架构下gomonkey报错问题解决
 date: 2023-10-11 17:11:01
 tags:
+  - arm
+  - gomonkey
+categories:
+  - 技术
+  - 编程语言
+  - Go
 ---
 # 问题一： undefined: buildJmpDirective
 需要将gomonkey升级到github.com/agiledragon/gomonkey/v2

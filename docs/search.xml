@@ -11,6 +11,24 @@
         <content type="html"><![CDATA[<h1 id="问题一：-undefined-buildJmpDirective"><a href="#问题一：-undefined-buildJmpDirective" class="headerlink" title="问题一： undefined: buildJmpDirective"></a>问题一： undefined: buildJmpDirective</h1><p>需要将gomonkey升级到github.com&#x2F;agiledragon&#x2F;gomonkey&#x2F;v2</p><h1 id="问题二：permission-denied"><a href="#问题二：permission-denied" class="headerlink" title="问题二：permission denied"></a>问题二：permission denied</h1><p>修改modify_binary_darwin.go文件，去掉syscall.PROT_EXEC<br><img src="/2023/10/11/apple-arm-gomonkey-error/1280X1280.png"></p>]]></content>
       
       
+      <categories>
+          
+          <category> 技术 </category>
+          
+          <category> 编程语言 </category>
+          
+          <category> Go </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> arm </tag>
+            
+            <tag> gomonkey </tag>
+            
+        </tags>
       
     </entry>
     
@@ -24,6 +42,24 @@
         <content type="html"><![CDATA[<h1 id="varchar类型长度常见设置"><a href="#varchar类型长度常见设置" class="headerlink" title="varchar类型长度常见设置"></a>varchar类型长度常见设置</h1><p>经常会看到大家设置varchar类型长度，一般都设置为255，那为什么不是其他数字呢？<br><br>以下针对我们常用的<em>innodb</em>存储引擎。</p><h1 id="varchar-255-和varchar-256-区别"><a href="#varchar-255-和varchar-256-区别" class="headerlink" title="varchar(255)和varchar(256)区别"></a>varchar(255)和varchar(256)区别</h1><p>varchar(255)需要1个字节记录字符串长度，而varchar(256)则需要2个字节记录字符串长度。<br>因此varchar(255)和varchar(256)，优先选择varchar(255)。</p><h1 id="varchar-64-和varchar-255-区别"><a href="#varchar-64-和varchar-255-区别" class="headerlink" title="varchar(64)和varchar(255)区别"></a>varchar(64)和varchar(255)区别</h1><ol><li>对于字符串长度超过64的，varchar(64)的sql会报错  </li><li>对于字符串长度不超过64的，两者在磁盘存储上没有区别<ol><li>都是1个字节记录字符串长度</li><li>由于innodb将varchar类型数据独立于聚簇索引单独存储，占用空间取决于实际字符串长度</li></ol></li></ol><p>所以如果字段长度不超过64，那么使用varchar(255)也没问题，但是如果该字段建<strong>索引</strong>了，那就不一样了：<br>建立索引时如果没有限制索引的大小，索引长度会默认采用的该字段类型的长度，因此用varchar(255)类型会占用更多的空间，加载索引信息时也会占用更多的内存，索引性能相对来说会较差。</p><h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>因此当我们设置varchar长度时，如果该字段确定不会拿来做索引，可以设置稍微长一点，比如varchar(255)，这样字段长度会更灵活一些；如果该字段有可能会被拿来做索引，那么就按需尽量设置的小一点，这样索引会有更好的性能。</p>]]></content>
       
       
+      <categories>
+          
+          <category> 技术 </category>
+          
+          <category> 数据库 </category>
+          
+          <category> MySQL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+            <tag> varchar </tag>
+            
+        </tags>
       
     </entry>
     

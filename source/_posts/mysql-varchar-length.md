@@ -2,6 +2,12 @@
 title: MySQL中varchar类型长度设置为多少合适
 date: 2023-10-11 16:12:33
 tags:
+  - MySQL
+  - varchar
+categories:
+  - 技术
+  - 数据库
+  - MySQL
 ---
 # varchar类型长度常见设置
 
