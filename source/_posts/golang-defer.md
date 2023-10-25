@@ -72,10 +72,9 @@ func a() int {
 }
 ```
 该示例运行结果是：
-```
-defer 1
-main 0
-```
+>defer 1
+>main 0
+
 虽然在defer里对i进行了操作，但是因为defer是在return执行之后运行的，所以并不会影响返回值。  
   
 3）函数运行过程中出现panic，defer函数也会被执行。
@@ -103,18 +102,17 @@ func a() int {
 }
 ```
 该示例运行结果是：
-```
-defer1 1
-panic: I'm panic
+>defer1 1
+>panic: I'm panic
+>
+>goroutine 1 [running]:
+>main.a()
+>        /Users/chenzeping/go/src/gostudy/defer/main.go:14 +0x68
+>main.main()
+>        /Users/chenzeping/go/src/gostudy/defer/main.go:6 +0x1c
+>exit status 2
 
-goroutine 1 [running]:
-main.a()
-        /Users/chenzeping/go/src/gostudy/defer/main.go:14 +0x68
-main.main()
-        /Users/chenzeping/go/src/gostudy/defer/main.go:6 +0x1c
-exit status 2
-```
-可以看到，在panic之前的defer被执行了，然后才是panic，panic之后的代码都没有执行。至于为什么defer会被执行，我在后面的博客Go语言异常处理中会详细解答。  
+可以看到，在panic之前的defer被执行了，然后才是panic，panic之后的代码都没有执行。至于为什么defer会被执行，我在后面的博客[Go语言异常处理机制](/2023/10/25/golang-exception-handle)中会详细解答。  
   
 4）defer函数的执行顺序是后进先出。  
 ```
@@ -132,8 +130,7 @@ func a() {
 }
 ```
 该示例运行结果是：
-```
-defer2
-defer1
-```
+>defer2
+>defer1
+
 可以看到，先执行了defer2，后执行了defer1。这个也好理解，每次defer都会把一个函数压入栈中，函数返回前再把延迟的函数从栈中取出并执行，顺序是后进先出。  

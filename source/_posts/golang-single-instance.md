@@ -58,30 +58,27 @@ func GetInstance() *User {
 }
 ```
 如上示例代码看似已经很完美了，但是当我们用go run -race检查时，会提示这段代码有DATA RACE的警告：
-```
-==================
-WARNING: DATA RACE
-Write at 0x00010507e6a0 by goroutine 6:
-  main.GetInstance()
-      /Users/chenzeping/go/src/gostudy/race/go_race_demo.go:22 +0xf4
-  main.main.func1()
-      /Users/chenzeping/go/src/gostudy/race/go_race_demo.go:32 +0x20
+>WARNING: DATA RACE
+>Write at 0x00010507e6a0 by goroutine 6:
+>  main.GetInstance()
+>      /Users/chenzeping/go/src/gostudy/race/go_race_demo.go:22 +0xf4
+>  main.main.func1()
+>      /Users/chenzeping/go/src/gostudy/race/go_race_demo.go:32 +0x20
+>
+>Previous read at 0x00010507e6a0 by goroutine 8:
+>  main.GetInstance()
+>      /Users/chenzeping/go/src/gostudy/race/go_race_demo.go:18 +0x30
+>  main.main.func3()
+>      /Users/chenzeping/go/src/gostudy/race/go_race_demo.go:38 +0x20
+>
+>Goroutine 6 (running) created at:
+>  main.main()
+>      /Users/chenzeping/go/src/gostudy/race/go_race_demo.go:31 +0x28
+>
+>Goroutine 8 (running) created at:
+>  main.main()
+>      /Users/chenzeping/go/src/gostudy/race/go_race_demo.go:37 +0x40
 
-Previous read at 0x00010507e6a0 by goroutine 8:
-  main.GetInstance()
-      /Users/chenzeping/go/src/gostudy/race/go_race_demo.go:18 +0x30
-  main.main.func3()
-      /Users/chenzeping/go/src/gostudy/race/go_race_demo.go:38 +0x20
-
-Goroutine 6 (running) created at:
-  main.main()
-      /Users/chenzeping/go/src/gostudy/race/go_race_demo.go:31 +0x28
-
-Goroutine 8 (running) created at:
-  main.main()
-      /Users/chenzeping/go/src/gostudy/race/go_race_demo.go:37 +0x40
-==================
-```
 大家可以亲自试一下，go_race_demo.go完整代码如下：
 ```
 package main
