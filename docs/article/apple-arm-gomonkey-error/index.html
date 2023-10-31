@@ -7,16 +7,16 @@
 
     
 
-    <title>Go语言异常处理机制 | </title>
+    <title>Apple arm架构下gomonkey报错问题解决 | </title>
     <meta name="author" content="nosewheel">
     
-    <meta name="description" content="Go语言舍弃了传统的 try…catch 类似的异常处理机制，但是我们仍然可以通过Go语言提供了 panic 和 recover 函数，配合 defer 语句灵活地处理运行时的异常。  
-名词介绍panicGo语言的内置方法，能够改变程序的控制流。当函数调用了panic，函数会停止运行，但是defe">
+    <meta name="description" content="问题一： undefined: buildJmpDirective需要将gomonkey升级到github.com&amp;#x2F;agiledragon&amp;#x2F;gomonkey&amp;#x2F;v2
+问题二：permission denied修改modify_binary_darwin.go文件，去掉sy">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="Go语言异常处理机制"/>
+    <meta property="og:title" content="Apple arm架构下gomonkey报错问题解决"/>
     <meta property="og:site_name" content="nosewheel&#39;s blog"/>
 
     
@@ -173,7 +173,7 @@
 
             <li class="collapse-level-0" collapse-level="0">
                 <a class="no-padding" href="/categories/技术/">
-                    技术 <span class="right">5 篇</span></a>
+                    技术 <span class="right">6 篇</span></a>
                 </a>
             </li>
 
@@ -181,7 +181,7 @@
 
             <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术/编程语言/">
-                    编程语言 <span class="right">4 篇</span></a>
+                    编程语言 <span class="right">5 篇</span></a>
                 </a>
             </li>
 
@@ -189,7 +189,7 @@
 
             <li class="collapse-level-2" collapse-level="2">
                 <a class="no-padding" href="/categories/技术/编程语言/Go/">
-                    Go <span class="right">4 篇</span></a>
+                    Go <span class="right">5 篇</span></a>
                 </a>
             </li>
 
@@ -258,12 +258,12 @@
             <div class="article-title">
                 
     
-        <h1>Go语言异常处理机制</h1>
+        <h1>Apple arm架构下gomonkey报错问题解决</h1>
     
 
 
             </div>
-            <time class="pink-link-context" datetime="2023-10-25T02:34:51.000Z"><a href="/2023/10/25/golang-exception-handle/">2023-10-25</a></time>
+            <time class="pink-link-context" datetime="2023-10-11T09:11:01.000Z"><a href="/article/apple-arm-gomonkey-error/">2023-10-11</a></time>
 
             <span id="busuanzi_container_page_pv" class="read-times-container">
     <i class="fa fa-eye"></i>
@@ -273,63 +273,34 @@
             
     <div class="tags-row">
         
-            <a href="/tags/Go/" class="chip pink lighten-1">Go</a>
+            <a href="/tags/arm/" class="chip pink lighten-1">arm</a>
         
-            <a href="/tags/defer/" class="chip pink lighten-1">defer</a>
-        
-            <a href="/tags/panic/" class="chip pink lighten-1">panic</a>
-        
-            <a href="/tags/recover/" class="chip pink lighten-1">recover</a>
+            <a href="/tags/gomonkey/" class="chip pink lighten-1">gomonkey</a>
         
     </div>
 
 
             <div class="toc pink-link-context hide-on-med-and-down">
-    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E5%90%8D%E8%AF%8D%E4%BB%8B%E7%BB%8D"><span class="section table-of-contents-text">名词介绍</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#panic"><span class="section table-of-contents-text">panic</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#recover"><span class="section table-of-contents-text">recover</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#defer"><span class="section table-of-contents-text">defer</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95"><span class="section table-of-contents-text">常见用法</span></a></li></ol>
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80%EF%BC%9A-undefined-buildJmpDirective"><span class="section table-of-contents-text">问题一： undefined: buildJmpDirective</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C%EF%BC%9Apermission-denied"><span class="section table-of-contents-text">问题二：permission denied</span></a></li></ol>
 </div>
 
 
             <div class="entry pink-link-context">
-                <p>Go语言舍弃了传统的 try…catch 类似的异常处理机制，但是我们仍然可以通过Go语言提供了 panic 和 recover 函数，配合 defer 语句灵活地处理运行时的异常。  </p>
-<h1 id="名词介绍"><a href="#名词介绍" class="headerlink" title="名词介绍"></a>名词介绍</h1><h2 id="panic"><a href="#panic" class="headerlink" title="panic"></a>panic</h2><p>Go语言的内置方法，能够改变程序的控制流。当函数调用了panic，函数会停止运行，但是defer函数仍然会运行，程序会在当前panic的goroutine全部退栈以后crash。</p>
-<h2 id="recover"><a href="#recover" class="headerlink" title="recover"></a>recover</h2><p>Go语言的内置方法，用于恢复发生panic的goroutine的控制。如果当前goroutine将要发生panic的话，recover会捕获这个panic，并恢复正常执行。</p>
-<h2 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h2><p>Go语言的关键字，用来延迟执行函数的，延迟的发生是在调用函数的return之后。关于defer，我在博客<a href="/2023/10/24/golang-defer">Go语言中的defer</a>中详细介绍过。而在这里为什么会提到defer呢？这是因为recover只在defer函数中生效。</p>
-<h1 id="常见用法"><a href="#常见用法" class="headerlink" title="常见用法"></a>常见用法</h1><p>如下是一个常见的捕获异常的例子</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    defer func() &#123;</span><br><span class="line">        if err := recover(); err != nil &#123;</span><br><span class="line">            fmt.Println(&quot;catch panic:&quot;, err)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    panic(&quot;I&#x27;m panic&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<blockquote>
-<p>catch panic: I’m panic</p>
-</blockquote>
-<p>需要注意的几个点：<br>1）recover只在defer函数中生效<br>下面这几种写法，都不会捕获panic</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    if err := recover(); err != nil &#123;</span><br><span class="line">        fmt.Println(&quot;catch panic:&quot;, err)</span><br><span class="line">    &#125;</span><br><span class="line">    panic(&quot;I&#x27;m panic&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>该示例输出结果：</p>
-<blockquote>
-<p>panic: I’m panic</p>
-<p>goroutine 1 [running]:<br>main.main()<br>       &#x2F;Users&#x2F;chenzeping&#x2F;go&#x2F;src&#x2F;gostudy&#x2F;panic&#x2F;main.go:9 +0x3c<br>exit status 2</p>
-</blockquote>
-<p>上面示例中recover()在panic之前运行，此时panic还未发生，肯定不会捕获panic。<br>再看下面这个例子</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    panic(&quot;I&#x27;m panic&quot;)</span><br><span class="line">    if err := recover(); err != nil &#123;</span><br><span class="line">        fmt.Println(&quot;catch panic:&quot;, err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>该示例输出结果：</p>
-<blockquote>
-<p>panic: I’m panic</p>
-<p>goroutine 1 [running]:<br>main.main()<br>       &#x2F;Users&#x2F;chenzeping&#x2F;go&#x2F;src&#x2F;gostudy&#x2F;panic&#x2F;main.go:6 +0x2c<br>exit status 2</p>
-</blockquote>
-<p>上面示例中recover()虽然写在了panic之后，但是由于panic后，后面的代码不会被执行，所以程序执行不到recover()，也就无法捕获panic。  </p>
-<p>2）recover只能捕获当前goroutine的panic<br>看下面这个例子</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;time&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    a()</span><br><span class="line">    time.Sleep(2 * time.Second)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func a() &#123;</span><br><span class="line">    defer func() &#123;</span><br><span class="line">        fmt.Println(&quot;in defer&quot;)</span><br><span class="line">        if err := recover(); err != nil &#123;</span><br><span class="line">            fmt.Println(&quot;catch panic:&quot;, err)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    go func() &#123;</span><br><span class="line">        time.Sleep(1 * time.Second)</span><br><span class="line">        panic(&quot;I&#x27;m panic&quot;)</span><br><span class="line">    &#125;()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<blockquote>
-<p>in defer<br>panic: I’m panic</p>
-<p>goroutine 18 [running]:<br>main.a.func2()<br>       &#x2F;Users&#x2F;chenzeping&#x2F;go&#x2F;src&#x2F;gostudy&#x2F;panic&#x2F;main.go:22 +0x38<br>created by main.a<br>       &#x2F;Users&#x2F;chenzeping&#x2F;go&#x2F;src&#x2F;gostudy&#x2F;panic&#x2F;main.go:20 +0x40<br>exit status 2</p>
-</blockquote>
-<p>从上面例子可以看出，其他goroutine中的panic并没有被recover捕获，从而最终导致程序崩溃。</p>
+                <h1 id="问题一：-undefined-buildJmpDirective"><a href="#问题一：-undefined-buildJmpDirective" class="headerlink" title="问题一： undefined: buildJmpDirective"></a>问题一： undefined: buildJmpDirective</h1><p>需要将gomonkey升级到github.com&#x2F;agiledragon&#x2F;gomonkey&#x2F;v2</p>
+<h1 id="问题二：permission-denied"><a href="#问题二：permission-denied" class="headerlink" title="问题二：permission denied"></a>问题二：permission denied</h1><p>修改modify_binary_darwin.go文件，去掉syscall.PROT_EXEC<br><img src="/article/apple-arm-gomonkey-error/1280X1280.png"></p>
 
                 
+<p class="pink-link-context">
+    <a href="/article/golang-single-instance/" rel="next" title="Golang中的单例模式">
+    上一篇：Golang中的单例模式
+  </a>
+</p>
+
 
 
 <p class="pink-link-context">
-    <a href="/2023/10/24/golang-defer/" rel="next" title="Go语言中的defer">
-    下一篇：Go语言中的defer
+    <a href="/article/mysql-varchar-length/" rel="next" title="MySQL中varchar类型长度设置为多少合适">
+    下一篇：MySQL中varchar类型长度设置为多少合适
   </a>
 </p>
 

@@ -14,4 +14,4 @@ categories:
 
 # 问题二：permission denied
 修改modify_binary_darwin.go文件，去掉syscall.PROT_EXEC
-![](/2023/10/11/apple-arm-gomonkey-error/1280X1280.png)
+![](/article/apple-arm-gomonkey-error/1280X1280.png)

@@ -7,16 +7,16 @@
 
     
 
-    <title>Apple arm架构下gomonkey报错问题解决 | </title>
+    <title>MySQL中varchar类型长度设置为多少合适 | </title>
     <meta name="author" content="nosewheel">
     
-    <meta name="description" content="问题一： undefined: buildJmpDirective需要将gomonkey升级到github.com&amp;#x2F;agiledragon&amp;#x2F;gomonkey&amp;#x2F;v2
-问题二：permission denied修改modify_binary_darwin.go文件，去掉sy">
+    <meta name="description" content="varchar类型长度常见设置经常会看到大家设置varchar类型长度，一般都设置为255，那为什么不是其他数字呢？以下针对我们常用的innodb存储引擎。
+varchar(255)和varchar(256)区别varchar(255)需要1个字节记录字符串长度，而varchar(256)则需要2个">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="Apple arm架构下gomonkey报错问题解决"/>
+    <meta property="og:title" content="MySQL中varchar类型长度设置为多少合适"/>
     <meta property="og:site_name" content="nosewheel&#39;s blog"/>
 
     
@@ -173,7 +173,7 @@
 
             <li class="collapse-level-0" collapse-level="0">
                 <a class="no-padding" href="/categories/技术/">
-                    技术 <span class="right">5 篇</span></a>
+                    技术 <span class="right">6 篇</span></a>
                 </a>
             </li>
 
@@ -181,7 +181,7 @@
 
             <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术/编程语言/">
-                    编程语言 <span class="right">4 篇</span></a>
+                    编程语言 <span class="right">5 篇</span></a>
                 </a>
             </li>
 
@@ -189,7 +189,7 @@
 
             <li class="collapse-level-2" collapse-level="2">
                 <a class="no-padding" href="/categories/技术/编程语言/Go/">
-                    Go <span class="right">4 篇</span></a>
+                    Go <span class="right">5 篇</span></a>
                 </a>
             </li>
 
@@ -241,7 +241,7 @@
             
     
     
-    <a class="breadcrumb" href="/categories/技术/">技术</a><a class="breadcrumb" href="/categories/技术/编程语言/">编程语言</a><a class="breadcrumb" href="/categories/技术/编程语言/Go/">Go</a>
+    <a class="breadcrumb" href="/categories/技术/">技术</a><a class="breadcrumb" href="/categories/技术/数据库/">数据库</a><a class="breadcrumb" href="/categories/技术/数据库/MySQL/">MySQL</a>
 
 
         
@@ -258,12 +258,12 @@
             <div class="article-title">
                 
     
-        <h1>Apple arm架构下gomonkey报错问题解决</h1>
+        <h1>MySQL中varchar类型长度设置为多少合适</h1>
     
 
 
             </div>
-            <time class="pink-link-context" datetime="2023-10-11T09:11:01.000Z"><a href="/2023/10/11/apple-arm-gomonkey-error/">2023-10-11</a></time>
+            <time class="pink-link-context" datetime="2023-10-11T08:12:33.000Z"><a href="/article/mysql-varchar-length/">2023-10-11</a></time>
 
             <span id="busuanzi_container_page_pv" class="read-times-container">
     <i class="fa fa-eye"></i>
@@ -273,36 +273,40 @@
             
     <div class="tags-row">
         
-            <a href="/tags/arm/" class="chip pink lighten-1">arm</a>
+            <a href="/tags/MySQL/" class="chip pink lighten-1">MySQL</a>
         
-            <a href="/tags/gomonkey/" class="chip pink lighten-1">gomonkey</a>
+            <a href="/tags/varchar/" class="chip pink lighten-1">varchar</a>
         
     </div>
 
 
             <div class="toc pink-link-context hide-on-med-and-down">
-    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80%EF%BC%9A-undefined-buildJmpDirective"><span class="section table-of-contents-text">问题一： undefined: buildJmpDirective</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C%EF%BC%9Apermission-denied"><span class="section table-of-contents-text">问题二：permission denied</span></a></li></ol>
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#varchar%E7%B1%BB%E5%9E%8B%E9%95%BF%E5%BA%A6%E5%B8%B8%E8%A7%81%E8%AE%BE%E7%BD%AE"><span class="section table-of-contents-text">varchar类型长度常见设置</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#varchar-255-%E5%92%8Cvarchar-256-%E5%8C%BA%E5%88%AB"><span class="section table-of-contents-text">varchar(255)和varchar(256)区别</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#varchar-64-%E5%92%8Cvarchar-255-%E5%8C%BA%E5%88%AB"><span class="section table-of-contents-text">varchar(64)和varchar(255)区别</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E7%BB%93%E8%AE%BA"><span class="section table-of-contents-text">结论</span></a></li></ol>
 </div>
 
 
             <div class="entry pink-link-context">
-                <h1 id="问题一：-undefined-buildJmpDirective"><a href="#问题一：-undefined-buildJmpDirective" class="headerlink" title="问题一： undefined: buildJmpDirective"></a>问题一： undefined: buildJmpDirective</h1><p>需要将gomonkey升级到github.com&#x2F;agiledragon&#x2F;gomonkey&#x2F;v2</p>
-<h1 id="问题二：permission-denied"><a href="#问题二：permission-denied" class="headerlink" title="问题二：permission denied"></a>问题二：permission denied</h1><p>修改modify_binary_darwin.go文件，去掉syscall.PROT_EXEC<br><img src="/2023/10/11/apple-arm-gomonkey-error/1280X1280.png"></p>
+                <h1 id="varchar类型长度常见设置"><a href="#varchar类型长度常见设置" class="headerlink" title="varchar类型长度常见设置"></a>varchar类型长度常见设置</h1><p>经常会看到大家设置varchar类型长度，一般都设置为255，那为什么不是其他数字呢？<br><br>以下针对我们常用的<em>innodb</em>存储引擎。</p>
+<h1 id="varchar-255-和varchar-256-区别"><a href="#varchar-255-和varchar-256-区别" class="headerlink" title="varchar(255)和varchar(256)区别"></a>varchar(255)和varchar(256)区别</h1><p>varchar(255)需要1个字节记录字符串长度，而varchar(256)则需要2个字节记录字符串长度。<br>因此varchar(255)和varchar(256)，优先选择varchar(255)。</p>
+<h1 id="varchar-64-和varchar-255-区别"><a href="#varchar-64-和varchar-255-区别" class="headerlink" title="varchar(64)和varchar(255)区别"></a>varchar(64)和varchar(255)区别</h1><ol>
+<li>对于字符串长度超过64的，varchar(64)的sql会报错  </li>
+<li>对于字符串长度不超过64的，两者在磁盘存储上没有区别<ol>
+<li>都是1个字节记录字符串长度</li>
+<li>由于innodb将varchar类型数据独立于聚簇索引单独存储，占用空间取决于实际字符串长度</li>
+</ol>
+</li>
+</ol>
+<p>所以如果字段长度不超过64，那么使用varchar(255)也没问题，但是如果该字段建<strong>索引</strong>了，那就不一样了：<br>建立索引时如果没有限制索引的大小，索引长度会默认采用的该字段类型的长度，因此用varchar(255)类型会占用更多的空间，加载索引信息时也会占用更多的内存，索引性能相对来说会较差。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>因此当我们设置varchar长度时，如果该字段确定不会拿来做索引，可以设置稍微长一点，比如varchar(255)，这样字段长度会更灵活一些；如果该字段有可能会被拿来做索引，那么就按需尽量设置的小一点，这样索引会有更好的性能。</p>
 
                 
 <p class="pink-link-context">
-    <a href="/2023/10/19/golang-single-instance/" rel="next" title="Golang中的单例模式">
-    上一篇：Golang中的单例模式
+    <a href="/article/apple-arm-gomonkey-error/" rel="next" title="Apple arm架构下gomonkey报错问题解决">
+    上一篇：Apple arm架构下gomonkey报错问题解决
   </a>
 </p>
 
 
-
-<p class="pink-link-context">
-    <a href="/2023/10/11/mysql-varchar-length/" rel="next" title="MySQL中varchar类型长度设置为多少合适">
-    下一篇：MySQL中varchar类型长度设置为多少合适
-  </a>
-</p>
 
 
             </div>

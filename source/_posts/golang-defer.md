@@ -112,7 +112,7 @@ func a() int {
 >        /Users/chenzeping/go/src/gostudy/defer/main.go:6 +0x1c
 >exit status 2
 
-可以看到，在panic之前的defer被执行了，然后才是panic，panic之后的代码都没有执行。至于为什么defer会被执行，我在后面的博客[Go语言异常处理机制](/2023/10/25/golang-exception-handle)中会详细解答。  
+可以看到，在panic之前的defer被执行了，然后才是panic，panic之后的代码都没有执行。关于defer在处理panic中的作用，我在后面的博客[Go语言异常处理机制](/article/golang-exception-handle)中会详细解答。  
   
 4）defer函数的执行顺序是后进先出。  
 ```

@@ -18,7 +18,7 @@ Go语言的内置方法，能够改变程序的控制流。当函数调用了pan
 ## recover
 Go语言的内置方法，用于恢复发生panic的goroutine的控制。如果当前goroutine将要发生panic的话，recover会捕获这个panic，并恢复正常执行。
 ## defer
-Go语言的关键字，用来延迟执行函数的，延迟的发生是在调用函数的return之后。关于defer，我在博客[Go语言中的defer](/2023/10/24/golang-defer)中详细介绍过。而在这里为什么会提到defer呢？这是因为recover只在defer函数中生效。
+Go语言的关键字，用来延迟执行函数的，延迟的发生是在调用函数的return之后。关于defer，我在博客[Go语言中的defer](/article/golang-defer)中详细介绍过。而在这里为什么会提到defer呢？这是因为recover只在defer函数中生效。
 # 常见用法
 如下是一个常见的捕获异常的例子
 ```
