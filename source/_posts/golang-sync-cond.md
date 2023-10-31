@@ -28,7 +28,7 @@ type Cond struct {
     checker copyChecker
 }
 ```
-每个 Cond 实例都会关联一个锁 L（互斥锁 *Mutex，或读写锁 *RWMutex），当修改条件或者调用 Wait 方法时，必须加锁。
+每个 Cond 实例都会关联一个锁 L（互斥锁 *Mutex，或读写锁 *RWMutex），当修改条件或者调用 Wait 方法时，需要进行加锁。
 ## 常用方法
 ### NewCond 创建实例
 ```
