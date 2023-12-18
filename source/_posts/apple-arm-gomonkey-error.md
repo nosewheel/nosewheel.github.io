@@ -10,7 +10,7 @@ categories:
   - Go
 ---
 # 问题一： undefined: buildJmpDirective
-需要将gomonkey升级到github.com/agiledragon/gomonkey/v2
+需要将gomonkey升级到github.com/agiledragon/gomonkey/v2@v2.10.1
 
 # 问题二：permission denied
 修改modify_binary_darwin.go文件，去掉syscall.PROT_EXEC

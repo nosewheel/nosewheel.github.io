@@ -140,7 +140,7 @@
       <link href="/article/apple-arm-gomonkey-error/"/>
       <url>/article/apple-arm-gomonkey-error/</url>
       
-        <content type="html"><![CDATA[<h1 id="问题一：-undefined-buildJmpDirective"><a href="#问题一：-undefined-buildJmpDirective" class="headerlink" title="问题一： undefined: buildJmpDirective"></a>问题一： undefined: buildJmpDirective</h1><p>需要将gomonkey升级到github.com&#x2F;agiledragon&#x2F;gomonkey&#x2F;v2</p><h1 id="问题二：permission-denied"><a href="#问题二：permission-denied" class="headerlink" title="问题二：permission denied"></a>问题二：permission denied</h1><p>修改modify_binary_darwin.go文件，去掉syscall.PROT_EXEC<br><img src="/article/apple-arm-gomonkey-error/1280X1280.png"></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="问题一：-undefined-buildJmpDirective"><a href="#问题一：-undefined-buildJmpDirective" class="headerlink" title="问题一： undefined: buildJmpDirective"></a>问题一： undefined: buildJmpDirective</h1><p>需要将gomonkey升级到github.com&#x2F;agiledragon&#x2F;gomonkey&#x2F;<a href="mailto:&#x76;&#x32;&#x40;&#118;&#50;&#x2e;&#49;&#48;&#x2e;&#x31;">&#x76;&#x32;&#x40;&#118;&#50;&#x2e;&#49;&#48;&#x2e;&#x31;</a></p><h1 id="问题二：permission-denied"><a href="#问题二：permission-denied" class="headerlink" title="问题二：permission denied"></a>问题二：permission denied</h1><p>修改modify_binary_darwin.go文件，去掉syscall.PROT_EXEC<br><img src="/article/apple-arm-gomonkey-error/1280X1280.png"></p>]]></content>
       
       
       <categories>
